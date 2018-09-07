@@ -1,0 +1,13 @@
+#This is sample file
+version: '3.1'
+services:
+    cloud9:
+        build: .
+        image: saitas/alpine-cloud9
+        volumes:
+            - /path/to/workspace:/workspace
+        environment:
+            USERNAME: user
+            PASSWORD: pass
+        ports:
+            - "8080:8080"
