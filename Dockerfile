@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.7
 LABEL maintainer "pemopemo"
 
 RUN apk add --update --no-cache bash git nodejs make gcc g++ python curl wget build-base openssl-dev apache2-utils libxml2-dev sshfs tmux supervisor \
