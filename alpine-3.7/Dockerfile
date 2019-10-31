@@ -1,7 +1,7 @@
-FROM alpine:3.8
+FROM alpine:3.7
 LABEL maintainer "shinya"
 
-RUN apk add --update --no-cache bash git nodejs npm make gcc g++ python curl wget build-base openssl-dev apache2-utils libxml2-dev sshfs tmux supervisor \
+RUN apk add --update --no-cache bash git nodejs make gcc g++ python curl wget build-base openssl-dev apache2-utils libxml2-dev sshfs tmux supervisor \
 	&& rm -f /var/cache/apk/* \
 	&& git clone https://github.com/c9/core.git /c9 \
 	&& curl -s -L https://raw.githubusercontent.com/c9/install/master/link.sh | bash \
