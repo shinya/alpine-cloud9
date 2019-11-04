@@ -1,0 +1,33 @@
+LABEL maintainer "shinya"
+FROM alpine:3.10
+
+RUN apk add --update --no-cache bash git make gcc g++ python curl wget build-base openssl-dev apache2-utils libxml2-dev sshfs tmux supervisor ca-certificates ncurses coreutils libgcc linux-headers grep util-linux binutils findutils \
+	&& rm -f /var/cache/apk/* \
+	&& touch ~/.bashrc \
+	&& curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+
+SHELL ["/bin/bash", "-c"]
+
+RUN source ~/.bashrc
+	&& nvm install -s 8 \
+	&& nvm use 8 \
+	&& rm -rf ~/.nvm/.cache/src/* \
+	&& git clone https://github.com/c9/core.git /c9 \
+	&& curl -s -L https://raw.githubusercontent.com/c9/install/master/link.sh | bash \
+	&& mkdir -p /workspace \
+	&& cd /c9 \
+	&& ./scripts/install-sdk.sh
+	&& apk del curl make gcc g++ python linux-headers binutils-gold gnupg git \
+	&& rm -fr /tmp/* /var/cache/apk/* /usr/share/man/* /usr/share/doc /root/.npm /root/.node-gyp /root/.config \
+		/usr/lib/node_modules/npm/man /usr/lib/node_modules/npm/doc /usr/lib/node_modules/npm/html /usr/lib/node_modules/npm/scripts 
+ 
+
+VOLUME ["/workspace"]
+WORKDIR /workspace
+
+
+# Expose ports.
+EXPOSE 8080
+
+ENV USERNAME user
+ENV PASSWORD pass
